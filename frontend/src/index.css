@@ -17,3 +17,7 @@ main {
 .rating span {
   margin: 0.1rem;
 }
+
+.h3size {
+  font-size: 2.8vh;
+}

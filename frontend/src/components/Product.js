@@ -7,7 +7,14 @@ import Rating from "./Rating";
 const Product = ({ guitar }) => {
   return (
     <Card className="my-3 p-3 rounded">
-      <Link to={`/product/${guitar._id}`}>
+      <Link
+        to={{
+          pathname: `/product/${guitar._id}`,
+          state: {
+            data: guitar,
+          },
+        }}
+      >
         <Card.Img variant="top" src={guitar.image} />
       </Link>
 

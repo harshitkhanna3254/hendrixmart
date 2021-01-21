@@ -10,6 +10,8 @@ var guitars = [
     countInStock: 15,
     rating: 4.5,
     numReviews: 25,
+    description:
+      "The sound you get out of this Stratocaster is going to be exceptional. It has that classic Fender Stratocaster sound that you get with three single-coil pickups. It sounds amazing through any amplifier, especially those that have chorus and reverb. Dial back the distortion to hit that sweet spot with your Stratocaster.",
   },
   {
     _id: "2",

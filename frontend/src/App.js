@@ -14,7 +14,6 @@ function App() {
         <Container>
           <Row>
             <Col>
-              <h1>Welcome to HendrixMart</h1>
               <Route path="/" component={HomeScreen} exact />
               <Route path="/product/:id" component={ProductScreen} />
             </Col>
