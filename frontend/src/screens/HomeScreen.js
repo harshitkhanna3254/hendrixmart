@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
-import { guitars } from "../guitars";
 import Product from "../components/Product";
+import axios from "axios";
 
 const HomeScreen = () => {
-  console.log("guitars .... ", guitars);
+  // console.log("guitars .... ", guitars);
+
+  const [guitars, setGuitars] = useState([]);
+
+  useEffect(() => {
+    async function fetchGuitars() {
+      const { data } = await axios.get("/api/products");
+      setGuitars(data);
+    }
+
+    fetchGuitars();
+  }, []);
+
   return (
     <>
       <Row>

@@ -1,0 +1,26 @@
+{
+  "name": "hendrixmart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harshitkhanna3254/hendrixmart.git"
+  },
+  "author": "Harshit Khanna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harshitkhanna3254/hendrixmart/issues"
+  },
+  "homepage": "https://github.com/harshitkhanna3254/hendrixmart#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "concurrently": "^5.3.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}
