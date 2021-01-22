@@ -4,7 +4,7 @@ import { useParams, useHistory, Link } from "react-router-dom";
 import Rating from "../components/Rating";
 
 const ProductScreen = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const history = useHistory();
 
   const guitar = history.location.state.data;
@@ -67,7 +67,7 @@ const ProductScreen = () => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Button disabled={guitar.countInStock == 0} block>
+                <Button disabled={guitar.countInStock === 0} block>
                   Add to Cart
                 </Button>
               </ListGroup.Item>
