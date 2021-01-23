@@ -1,6 +1,5 @@
 var guitars = [
   {
-    _id: "1",
     name: "American Standard Stratocaster",
     color: "3 Color Sunburst",
     image: "/images/strat.jpg",
@@ -14,7 +13,6 @@ var guitars = [
       "The sound you get out of this Stratocaster is going to be exceptional. It has that classic Fender Stratocaster sound that you get with three single-coil pickups. It sounds amazing through any amplifier, especially those that have chorus and reverb. Dial back the distortion to hit that sweet spot with your Stratocaster.",
   },
   {
-    _id: "2",
     name: "Les Paul SG - AC/DC Edition",
     color: "Ebony",
     image: "/images/sg-ebony.jpg",
@@ -24,9 +22,10 @@ var guitars = [
     countInStock: 9,
     rating: 4.0,
     numReviews: 12,
+    description:
+      "The Gibson SG is a solid-body electric guitar model introduced by Gibson in 1961 as the Gibson Les Paul SG. It remains in production today in many variations of the initial design. The SG (where SG refers to Solid Guitar) Standard is Gibson's best-selling model of all time.",
   },
   {
-    _id: "3",
     name: "Les Paul Standard - Slash Edition",
     color: "Vintage Sunburst",
     image: "/images/les-paul-standard.jpg",
@@ -36,10 +35,11 @@ var guitars = [
     countInStock: 5,
     rating: 5,
     numReviews: 22,
+    description:
+      "The Gibson Les Paul is a solid body electric guitar that was first sold by the Gibson Guitar Corporation in 1952 The Les Paul was designed by Gibson president Ted McCarty, factory manager John Huis and their team with input from and endorsement by guitarist Les Paul. Its typical design features a solid mahogany body with a carved maple top and a single cutaway, a mahogany set-in neck with a rosewood fretboard, two pickups with independent volume and tone controls.",
   },
   {
-    _id: "4",
-    name: "Custom 24 - John Mayer Edition",
+    name: "SE Custom 24 - John Mayer Edition",
     color: "Lush Green",
     image: "/images/custom-24.png",
     brand: "PRS",
@@ -48,9 +48,10 @@ var guitars = [
     countInStock: 5,
     rating: 2.5,
     numReviews: 34,
+    description:
+      "The SE Custom 24 brings the original PRS design platform to the high-quality, more affordable SE line up of instruments. Played by internationally touring artists, gigging musicians, and aspiring players, the SE Custom 24 features a maple top, mahogany back, wide thin maple neck, rosewood fretboard with bird inlays, and the PRS patented molded tremolo bridge.",
   },
   {
-    _id: "5",
     name: "325 Rickenbacker 1969 Custom",
     color: "Panther Black",
     image: "/images/325-rickenbacker.png",
@@ -60,9 +61,10 @@ var guitars = [
     countInStock: 0,
     rating: 3.5,
     numReviews: 7,
+    description:
+      " was designed by Roger Rossmeisl, a guitar craftsman from a family of German instrument makers. Production models were 20 3⁄4 inches (530 mm) short scale, dot fretboard inlays, and a small (12 3⁄4-inch-wide [320 mm]) body. The body is unbound, semi-hollow, with 2 o'clock angled sound hole (although re-issues lack a sound hole due to the Lennon connection).",
   },
   {
-    _id: "6",
     name: "American Standard Telecaster",
     color: "Custom Old Wood",
     image: "/images/telecaster.png",
@@ -72,9 +74,10 @@ var guitars = [
     countInStock: 1,
     rating: 4.5,
     numReviews: 20,
+    description:
+      "The Fender Telecaster, colloquially known as the Tele is the world's first commercially successful solid-body electric guitar. Its simple yet effective design and revolutionary sound broke ground and set trends in electric guitar manufacturing and popular music. Introduced for national distribution as the Broadcaster in the autumn of 1950 as a two-pickup version of its sister model, the single-pickup Esquire.",
   },
   {
-    _id: "7",
     name: "100 Series Acoustic Special Edition",
     color: "Vintage Natural Dark",
     image: "/images/100-series-acoustic.jpg",
@@ -84,7 +87,9 @@ var guitars = [
     countInStock: 7,
     rating: 4.0,
     numReviews: 9,
+    description:
+      "The Taylor 110ce and 110e dreadnoughts are excellent sounding guitars, as are the grand auditorium-style 114ce and 114e. For use as a secondary or utility guitar, the Taylor 100 Series shines. It provides that beautiful Taylor sound and the ability to plug the guitar into any sound system.",
   },
 ];
 
-module.exports.guitars = guitars;
+export default guitars;

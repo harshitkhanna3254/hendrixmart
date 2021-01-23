@@ -1,6 +1,12 @@
-const express = require("express");
-const { guitars } = require("./data/guitars");
-require("dotenv").config();
+import express from "express";
+import dotenv from "dotenv";
+import colors from "colors";
+
+import guitars from "./data/guitars.js";
+import connectToDb from "./config/db.js";
+
+dotenv.config();
+connectToDb();
 
 const app = express();
 
@@ -24,6 +30,7 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(
-    `Server running in \"${process.env.NODE_ENV}\" mode on port: ${PORT}`
+    `Server running in \"${process.env.NODE_ENV}\" mode on port: ${PORT}`.yellow
+      .bold
   );
 });
