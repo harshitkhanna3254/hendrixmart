@@ -15,12 +15,12 @@ const app = express();
 app.use(morgan("dev"));
 
 app.use((req, res, next) => {
-  console.log("Default middleware");
+  // console.log("Default middleware");
   next();
 });
 
 app.get("/", (req, res, next) => {
-  console.log("Inside Root route");
+  // console.log("Inside Root route");
   res.send("Root");
   next();
 });

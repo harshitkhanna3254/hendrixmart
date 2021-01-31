@@ -11,7 +11,7 @@ const router = express.Router();
 router.get(
   "/",
   asyncHandler(async (req, res) => {
-    const guitars = await Product.find();
+    const guitars = await Product.find({});
     console.log(guitars);
     res.json(guitars);
   })
