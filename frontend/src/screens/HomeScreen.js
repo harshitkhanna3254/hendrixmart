@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import Product from "../components/Product";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../actions/productActions";
 
 const HomeScreen = () => {
-  // console.log("guitars .... ", guitars);
+  const dispatch = useDispatch();
+  const guitars = [];
 
-  const [guitars, setGuitars] = useState([]);
+  const productList = useSelector((state) => state.productList);
+
+  const { loading, error, products } = productList;
 
   useEffect(() => {
-    async function fetchGuitars() {
-      const { data } = await axios.get("/api/products");
-      setGuitars(data);
-    }
-
-    fetchGuitars();
-  }, []);
+    dispatch(listProducts());
+  }, [dispatch]);
 
   return (
     <>
       <Row>
-        {guitars.map((guitar) => (
+        {products.map((guitar) => (
           <Col key={guitar._id} sm={12} md={6} lg={4} xl={3}>
             <Product guitar={guitar} />
           </Col>
