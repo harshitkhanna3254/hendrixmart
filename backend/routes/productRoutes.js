@@ -12,6 +12,7 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const guitars = await Product.find({});
+    // throw new Error("not a");
     console.log(guitars);
     res.json(guitars);
   })
