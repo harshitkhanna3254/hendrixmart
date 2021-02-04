@@ -4,27 +4,33 @@ import Product from "../components/Product";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../actions/productActions";
 import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const guitars = [];
+  // const guitars = [];
 
   const productList = useSelector((state) => state.productList);
 
   const { loading, error, products } = productList;
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    if (products.length === 0) {
+      dispatch(listProducts());
+    }
+    // dispatch(listProducts());
+  }, [dispatch, products.length]);
 
   return (
     <>
       {loading ? (
-        <h2>
+        <div>
           <Loader />
-        </h2>
+        </div>
       ) : error ? (
-        <h3>{error}</h3>
+        <div>
+          <Message variant="danger">{error}</Message>
+        </div>
       ) : (
         <Row>
           {products.map((guitar) => (
