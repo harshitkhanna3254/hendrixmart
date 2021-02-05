@@ -12,7 +12,7 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const guitars = await Product.find({});
-    // throw new Error("not a");
+    // throw new Error("Not Authorized");
     console.log(guitars);
     res.json(guitars);
   })
@@ -27,6 +27,7 @@ router.get(
     const guitar = await Product.findById(req.params.id);
 
     if (guitar) {
+      // throw new Error("Product not found");
       res.json(guitar);
     } else {
       res.status(404);

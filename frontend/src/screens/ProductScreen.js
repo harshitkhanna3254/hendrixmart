@@ -1,5 +1,13 @@
-import React, { useEffect } from "react";
-import { Button, Col, Image, ListGroup, Row, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Col,
+  Image,
+  ListGroup,
+  Row,
+  Card,
+  Form,
+} from "react-bootstrap";
 import { useParams, useHistory, Link } from "react-router-dom";
 import Rating from "../components/Rating";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,25 +23,27 @@ const ProductScreen = () => {
   const { id } = useParams();
   const history = useHistory();
 
+  const [qty, setQty] = useState(0);
+
   var { loading, guitar, error } = useSelector((state) => state.productDetails);
   console.log(guitar);
   // console.log(history.location.state.data);
   // const guitar = {};
   useEffect(() => {
-    if (!history.location.state) {
-      console.log("inside dispatch");
-      dispatch(listProductDetails(id));
-    } else {
-      console.log("in else block");
-      dispatch(listProductDetails(id));
-    }
-    // console.log(history);
+    console.log("inside dispatch");
+    dispatch(listProductDetails(id));
+
     return () => {
       dispatch(clearProductDetails());
     };
   }, [dispatch, history.location.state, id]);
 
-  console.log("After useEffect");
+  // console.log("After useEffect");
+
+  const addToCartHandler = () => {
+    console.log(`Add to Cart`);
+    history.push(`/cart/${id}/qty=${qty}`);
+  };
 
   return (
     <>
@@ -96,8 +106,33 @@ const ProductScreen = () => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
+                {guitar.countInStock > 0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col style={{ paddingTop: "10px" }}>Quantity</Col>
+                      <Col>
+                        <Form.Control
+                          as="select"
+                          value={qty}
+                          onChange={(e) => setQty(e.target.value)}
+                        >
+                          {[...Array(guitar.countInStock).keys()].map((x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          ))}
+                        </Form.Control>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
+
                 <ListGroup.Item>
-                  <Button disabled={guitar.countInStock === 0} block>
+                  <Button
+                    disabled={guitar.countInStock === 0}
+                    block
+                    onClick={addToCartHandler}
+                  >
                     Add to Cart
                   </Button>
                 </ListGroup.Item>

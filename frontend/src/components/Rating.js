@@ -34,4 +34,9 @@ Rating.propTypes = {
   numReviews: PropTypes.number.isRequired,
 };
 
+Rating.defaultProps = {
+  rating: 0,
+  numReviews: 0,
+};
+
 export default Rating;
