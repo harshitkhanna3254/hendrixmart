@@ -6,7 +6,7 @@ import {
   PRODUCT_DETAIL_REQUEST,
   PRODUCT_DETAIL_SUCCESS,
   CLEAR_PRODUCT_DETAILS,
-} from "../constants/actionTypes";
+} from "../constants/productConstants";
 
 import axios from "axios";
 
