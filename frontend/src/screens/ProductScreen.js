@@ -23,7 +23,7 @@ const ProductScreen = () => {
   const { id } = useParams();
   const history = useHistory();
 
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
 
   var { loading, guitar, error } = useSelector((state) => state.productDetails);
   console.log(guitar);
@@ -42,7 +42,7 @@ const ProductScreen = () => {
 
   const addToCartHandler = () => {
     console.log(`Add to Cart`);
-    history.push(`/cart/${id}/qty=${qty}`);
+    history.push(`/cart/${id}?qty=${qty}`);
   };
 
   return (

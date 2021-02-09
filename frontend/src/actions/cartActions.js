@@ -2,8 +2,8 @@ import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
 import axios from "axios";
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
-  const { data } = await axios.get(`api/products/${id}`);
-
+  const { data } = await axios.get(`/api/products/${id}`);
+  console.log("data", data);
   dispatch({
     type: CART_ADD_ITEM,
     payload: {
@@ -15,6 +15,9 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
       qty,
     },
   });
+  // console.log(
+  //   "AddToCart action dispatched... will set cart in localStoreage now"
+  // );
 
-  localStorage.setItem("cartItems", JSON.stringify(getState.cart.cartItems));
+  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
