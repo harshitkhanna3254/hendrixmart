@@ -4,7 +4,7 @@ import { Alert } from "react-bootstrap";
 const Message = ({ variant, children }) => {
   return (
     <Alert variant={variant}>
-      <Alert.Heading>Some Error Occured!</Alert.Heading>
+      <Alert.Heading>Alert!</Alert.Heading>
       {children}
     </Alert>
   );
