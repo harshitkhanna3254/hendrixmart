@@ -4,6 +4,7 @@ import colors from "colors";
 import morgan from "morgan";
 
 import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 import connectToDb from "./config/db.js";
@@ -13,6 +14,7 @@ connectToDb();
 
 const app = express();
 app.use(morgan("dev"));
+app.use(express.json());
 
 app.use((req, res, next) => {
   // console.log("Default middleware");
@@ -26,6 +28,7 @@ app.get("/", (req, res, next) => {
 });
 
 app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
 
 app.use(notFound);
 
