@@ -13,7 +13,7 @@ const authUser = asyncHandler(async (req, res) => {
 
   if (user && (await user.matchPassword(password))) {
     res.send({
-      id: user._id,
+      _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
@@ -29,7 +29,19 @@ const authUser = asyncHandler(async (req, res) => {
 // @route    GET /api/users/profile
 // @access   Private
 const getUserProfile = asyncHandler(async (req, res) => {
-  res.send("Success");
+  const { user } = req;
+
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(401);
+    throw new Error("User not found");
+  }
 });
 
 export { authUser, getUserProfile };
