@@ -26,11 +26,8 @@ const ProductScreen = () => {
   const [qty, setQty] = useState(1);
 
   var { loading, guitar, error } = useSelector((state) => state.productDetails);
-  console.log(guitar);
-  // console.log(history.location.state.data);
-  // const guitar = {};
+
   useEffect(() => {
-    console.log("inside dispatch");
     dispatch(listProductDetails(id));
 
     return () => {
@@ -41,7 +38,6 @@ const ProductScreen = () => {
   // console.log("After useEffect");
 
   const addToCartHandler = () => {
-    console.log(`Add to Cart`);
     history.push(`/cart/${id}?qty=${qty}`);
   };
 
@@ -55,7 +51,7 @@ const ProductScreen = () => {
         <Button className="my-3">Go Back</Button>
       </Link>
       {loading ? (
-        <Loader />
+        <Loader size="large" />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (

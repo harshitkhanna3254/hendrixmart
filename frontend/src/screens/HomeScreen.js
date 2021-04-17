@@ -22,7 +22,7 @@ const HomeScreen = () => {
     <>
       {loading ? (
         <div>
-          <Loader />
+          <Loader size="large" />
         </div>
       ) : error ? (
         <div>

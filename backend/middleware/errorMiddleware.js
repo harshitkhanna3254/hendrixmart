@@ -7,7 +7,6 @@ const notFound = (req, res, next) => {
 
 const errorHandler = (err, req, res, next) => {
   console.log("Error Middleware");
-  console.log(res.statusCode);
   const statusCode = res.statusCode == 200 ? 500 : res.statusCode;
   res.statusCode = statusCode;
   res.json({

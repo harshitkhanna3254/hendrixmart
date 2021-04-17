@@ -9,8 +9,6 @@ const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email: email });
 
-  console.log(user);
-
   if (user && (await user.matchPassword(password))) {
     res.send({
       _id: user._id,

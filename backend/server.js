@@ -17,12 +17,10 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use((req, res, next) => {
-  // console.log("Default middleware");
   next();
 });
 
 app.get("/", (req, res, next) => {
-  // console.log("Inside Root route");
   res.send("Root");
   next();
 });
