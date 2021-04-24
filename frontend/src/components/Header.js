@@ -12,6 +12,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
+    // history.push("/signin");
   };
 
   return (
