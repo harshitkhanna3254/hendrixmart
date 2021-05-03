@@ -35,7 +35,6 @@ const CartScreen = ({ location, history }) => {
   };
 
   const checkoutHandler = () => {
-    console.log("Checkout");
     history.push(`/signin?redirect=shipping`);
   };
 
