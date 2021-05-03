@@ -31,9 +31,9 @@ const PlaceOrder = ({ history }) => {
 
   cart.shippingPrice = cart.itemsPrice < 500000 ? 0 : 150;
 
-  cart.tax = cart.itemsPrice * 0.015;
+  cart.taxPrice = cart.itemsPrice * 0.015;
 
-  cart.totalAmt = cart.itemsPrice + cart.shippingPrice + cart.tax;
+  cart.totalAmt = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
   const placeOrderHandler = (e) => {
     e.preventDefault();
@@ -131,7 +131,7 @@ const PlaceOrder = ({ history }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Tax (1.5%)</Col>
-                  <Col>&#8377;{cart.tax.toLocaleString("hi-IN")}</Col>
+                  <Col>&#8377;{cart.taxPrice.toLocaleString("hi-IN")}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
