@@ -53,7 +53,9 @@ const ProductScreen = () => {
       {loading ? (
         <Loader size="large" />
       ) : error ? (
-        <Message variant="danger">{error}</Message>
+        <Message variant="danger" header>
+          {error}
+        </Message>
       ) : (
         <Row>
           <Col md={6}>

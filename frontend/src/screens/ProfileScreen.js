@@ -51,9 +51,21 @@ const ProfileScreen = ({ history, location }) => {
     <Row>
       <Col md={3}>
         <h2>User Profile</h2>
-        {error && <Message variant="danger">{error}</Message>}
-        {message && <Message variant="danger">{message}</Message>}
-        {success && <Message variant="success">Update Successful</Message>}
+        {error && (
+          <Message variant="danger" header>
+            {error}
+          </Message>
+        )}
+        {message && (
+          <Message variant="danger" header>
+            {message}
+          </Message>
+        )}
+        {success && (
+          <Message variant="success" header>
+            Update Successful
+          </Message>
+        )}
 
         {loading && <Loader size="small" />}
         <Form onSubmit={submitHandler}>
