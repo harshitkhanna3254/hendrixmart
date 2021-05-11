@@ -37,8 +37,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 
 var razorpay = new Razorpay({
-  key_id: "rzp_test_K6ieIxH2ggaPsz",
-  key_secret: "lnWbQezD8GqUMJbGgMDMuIvo",
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 app.get("/hendrixmartLogo", (req, res) => {
@@ -64,27 +64,24 @@ app.post(
   })
 );
 
-app.post(
+app.get(
   "/api/razorpay/verification",
   asyncHandler(async (req, res) => {
-    console.log("Reached verification handler");
+    const { orderId, paymentId, signature } = req.query;
 
-    const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
-    console.log(secret);
-    const shashum = crypto.createHmac("sha256", secret);
-    shashum.update(JSON.stringify(req.body));
-    const digest = shashum.digest("hex");
-    console.log(digest);
-    const xRazorpaySignature = req.headers["x-razorpay-signature"];
-    console.log(xRazorpaySignature);
+    const digest = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .update(orderId + "|" + paymentId)
+      .digest("hex");
 
-    if (digest === xRazorpaySignature) {
-      console.log("Everything gooood");
+    if (digest === signature) {
+      res.json({ success: true, message: "" });
     } else {
-      console.log("Baddddddddddddd.");
+      res.json({
+        success: false,
+        message: "Something went wrong. Try the payment again after a while.",
+      });
     }
-
-    res.json({ status: "ok" });
   })
 );
 

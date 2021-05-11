@@ -27,6 +27,8 @@ const OrderScreen = ({ match }) => {
   };
 
   const [sdkReady, setSdkReady] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(true);
+  const [paymentMessage, setPaymentMessage] = useState("");
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, error, loading } = orderDetails;
@@ -54,12 +56,13 @@ const OrderScreen = ({ match }) => {
       currency: razorpayResponse.currency,
       name: "Hendrixmart",
       description: `You're buying ${order.orderItems.length} items`,
+      image: "/hendrixmartLogo",
       order_id: razorpayResponse.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
       handler: razorpaySuccessHandler,
       prefill: {
         name: order.user.name,
         email: order.user.email,
-        conntact: "9191919191",
+        contact: "9191919191",
       },
       theme: {
         color: "#3399cc",
@@ -69,8 +72,25 @@ const OrderScreen = ({ match }) => {
     paymentObject.open();
   };
 
-  const razorpaySuccessHandler = (result) => {
-    console.log("Payment successful. ", result);
+  const razorpaySuccessHandler = async (paymentResult) => {
+    console.log("Result handler :: ", paymentResult);
+    const { data } = await axios.get("/api/razorpay/verification", {
+      params: {
+        orderId: paymentResult.razorpay_order_id,
+        paymentId: paymentResult.razorpay_payment_id,
+        signature: paymentResult.razorpay_signature,
+      },
+    });
+    const { message, success: razorpaySuccess } = data;
+    console.log(message, razorpaySuccess);
+
+    setPaymentSuccess(razorpaySuccess);
+    setPaymentMessage(message);
+
+    paymentResult.email_address = order.user.email;
+    paymentResult.status = "COMPLETED";
+
+    dispatch(payOrder(orderId, paymentResult));
   };
 
   useEffect(() => {
@@ -152,12 +172,17 @@ const OrderScreen = ({ match }) => {
                     </Col>
                   </Row>
 
+                  {!paymentSuccess && (
+                    <Message variant="warning">{paymentMessage}</Message>
+                  )}
                   {order.isPaid ? (
                     <Message variant="success">
-                      Order paid at ${order.paidAt}
+                      Order paid at {new Date(order.paidAt).toLocaleString()}
                     </Message>
                   ) : (
-                    <Message variant="danger">Unpaid</Message>
+                    <Message variant="danger">
+                      Unpaid. On payment, details will be shown here.
+                    </Message>
                   )}
                 </ListGroup.Item>
 
