@@ -1,15 +1,18 @@
 import express from "express";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import colors from "colors";
 import morgan from "morgan";
 
+import connectToDb from "./config/db.js";
+
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import razorpayRoutes from "./routes/razorpayRoutes.js";
 
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
-
-import connectToDb from "./config/db.js";
 
 dotenv.config();
 connectToDb();
@@ -22,18 +25,19 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res, next) => {
+app.get("/root", (req, res, next) => {
   res.send("Root");
-  next();
 });
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/razorpay", razorpayRoutes);
 
-app.get("/api/config/paypal", (req, res) =>
-  res.send(process.env.PAYPAL_CLIENT_ID)
-);
+app.get("/hendrixmartLogo", (req, res) => {
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  res.sendFile(path.join(__dirname, "images/hendrixmart.png"));
+});
 
 app.use(notFound);
 

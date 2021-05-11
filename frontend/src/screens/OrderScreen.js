@@ -7,6 +7,7 @@ import {
   ListGroupItem,
   Image,
   Card,
+  Button,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
@@ -14,6 +15,8 @@ import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
 import { getOrderDetails, payOrder } from "../actions/orderActions";
 import { ORDER_PAY_RESET } from "../constants/orderConstants";
+
+const RAZORPAY_SCRIPT = "https://checkout.razorpay.com/v1/checkout.js";
 
 const OrderScreen = ({ match }) => {
   const dispatch = useDispatch();
@@ -24,6 +27,8 @@ const OrderScreen = ({ match }) => {
   };
 
   const [sdkReady, setSdkReady] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(true);
+  const [paymentMessage, setPaymentMessage] = useState("");
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, error, loading } = orderDetails;
@@ -35,33 +40,85 @@ const OrderScreen = ({ match }) => {
     error: errorPay,
   } = orderPay;
 
-  useEffect(() => {
-    const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get("/api/config/paypal");
-      // console.log(clientId);
+  const razorpayOrderHandler = async (e) => {
+    const orderDetails = {
+      amount: order.totalPrice,
+    };
 
+    const { data: razorpayResponse } = await axios.post(
+      "/api/razorpay",
+      orderDetails
+    );
+
+    const options = {
+      key: "rzp_test_K6ieIxH2ggaPsz", // Enter the Key ID generated from the Dashboard
+      amount: razorpayResponse.amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: razorpayResponse.currency,
+      name: "Hendrixmart",
+      description: `You're buying ${order.orderItems.length} items`,
+      image: "/hendrixmartLogo",
+      order_id: razorpayResponse.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      handler: razorpaySuccessHandler,
+      prefill: {
+        name: order.user.name,
+        email: order.user.email,
+        contact: "9191919191",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  };
+
+  const razorpaySuccessHandler = async (paymentResult) => {
+    console.log("Result handler :: ", paymentResult);
+    const { data } = await axios.get("/api/razorpay/verification", {
+      params: {
+        orderId: paymentResult.razorpay_order_id,
+        paymentId: paymentResult.razorpay_payment_id,
+        signature: paymentResult.razorpay_signature,
+      },
+    });
+    const { message, success: razorpaySuccess } = data;
+    console.log(message, razorpaySuccess);
+
+    setPaymentSuccess(razorpaySuccess);
+    setPaymentMessage(message);
+
+    paymentResult.email_address = order.user.email;
+    paymentResult.status = "COMPLETED";
+
+    dispatch(payOrder(orderId, paymentResult));
+  };
+
+  useEffect(() => {
+    const loadRazorpayScript = async () => {
       const script = document.createElement("script");
       script.type = "text/javascript";
+      script.src = RAZORPAY_SCRIPT;
       script.async = true;
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=INR`;
-      script.onload = () => {
+      script.addEventListener("load", () => {
         setSdkReady(true);
+      });
+      script.onerror = () => {
+        setSdkReady(false);
       };
       document.body.appendChild(script);
     };
 
-    addPayPalScript();
-
     if (!order || successPay || order._id !== orderId) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
+    } else if (!order.isPaid) {
+      if (!window.Razorpay) {
+        loadRazorpayScript();
+      } else {
+        setSdkReady(true);
+      }
     }
   }, [dispatch, order, orderId, successPay]);
-
-  const successPaymentHandler = (paymentResult) => {
-    console.log(paymentResult);
-    dispatch(payOrder(orderId, paymentResult));
-  };
 
   return (
     <>
@@ -115,12 +172,17 @@ const OrderScreen = ({ match }) => {
                     </Col>
                   </Row>
 
+                  {!paymentSuccess && (
+                    <Message variant="warning">{paymentMessage}</Message>
+                  )}
                   {order.isPaid ? (
                     <Message variant="success">
-                      Order paid at ${order.paidAt}
+                      Order paid at {new Date(order.paidAt).toLocaleString()}
                     </Message>
                   ) : (
-                    <Message variant="danger">Unpaid</Message>
+                    <Message variant="danger">
+                      Unpaid. On payment, details will be shown here.
+                    </Message>
                   )}
                 </ListGroup.Item>
 
@@ -200,7 +262,16 @@ const OrderScreen = ({ match }) => {
                     </Row>
                   </ListGroup.Item>
                   {!order.isPaid && (
-                    <ListGroup.Item>Payment Button</ListGroup.Item>
+                    <ListGroup.Item>
+                      {loadingPay && <Loader size="small" />}
+                      {!sdkReady ? (
+                        <Loader size="small" />
+                      ) : (
+                        <Button onClick={razorpayOrderHandler}>
+                          Payment Button
+                        </Button>
+                      )}
+                    </ListGroup.Item>
                   )}
                 </ListGroup>
               </Card>
