@@ -34,11 +34,7 @@ const OrderScreen = ({ match }) => {
   const { order, error, loading } = orderDetails;
 
   const orderPay = useSelector((state) => state.orderPay);
-  const {
-    success: successPay,
-    loading: loadingPay,
-    error: errorPay,
-  } = orderPay;
+  const { success: successPay, loading: loadingPay } = orderPay;
 
   const razorpayOrderHandler = async (e) => {
     const orderDetails = {
