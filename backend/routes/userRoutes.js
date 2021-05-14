@@ -2,11 +2,12 @@ import express from "express";
 
 import {
   authUser,
+  getAllUsers,
   getUserProfile,
   registerUser,
   updateUserProfile,
 } from "../controllers/userController.js";
-import { authMiddleware } from "../middleware/authMiddleware.js";
+import { adminAuth, authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -17,6 +18,9 @@ router
   .get(authMiddleware, getUserProfile)
   .put(authMiddleware, updateUserProfile);
 
-router.route("/").post(registerUser);
+router
+  .route("/")
+  .post(registerUser)
+  .get(authMiddleware, adminAuth, getAllUsers);
 
 export default router;

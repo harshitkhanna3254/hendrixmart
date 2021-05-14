@@ -15,6 +15,7 @@ import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
 // import { savePaymentMethod } from "../actions/cartActions";
 import { createOrder } from "../actions/orderActions";
+import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 
 const PlaceOrder = ({ history }) => {
   const dispatch = useDispatch();
@@ -36,6 +37,8 @@ const PlaceOrder = ({ history }) => {
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, error, success, loading } = orderCreate;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const placeOrderHandler = (e) => {
     e.preventDefault();
@@ -53,8 +56,13 @@ const PlaceOrder = ({ history }) => {
   };
 
   useEffect(() => {
+    if (!userInfo) {
+      history.push(`/signin`);
+    }
+
     if (success) {
       history.push(`/order/${order._id}`);
+      dispatch({ type: ORDER_CREATE_RESET });
     }
     // eslint-disable-next-line
   }, [history, success]);

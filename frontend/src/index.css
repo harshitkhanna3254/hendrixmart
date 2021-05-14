@@ -10,6 +10,10 @@ main {
   font-size: 1.4rem !important;
 }
 
+.nav-item {
+  margin-right: 0 !important;
+}
+
 .rating {
   width: max-content;
 }

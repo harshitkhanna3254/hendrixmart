@@ -101,4 +101,20 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, getUserProfile, registerUser, updateUserProfile };
+/* -------------------------------------------------------------------------- */
+/*                                ADMIN ROUTES                                */
+/* -------------------------------------------------------------------------- */
+
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+
+  res.json(users);
+});
+
+export {
+  authUser,
+  getUserProfile,
+  registerUser,
+  updateUserProfile,
+  getAllUsers,
+};
