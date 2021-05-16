@@ -62,7 +62,7 @@ var guitars = [
     rating: 3.5,
     numReviews: 7,
     description:
-      " was designed by Roger Rossmeisl, a guitar craftsman from a family of German instrument makers. Production models were 20 3⁄4 inches (530 mm) short scale, dot fretboard inlays, and a small (12 3⁄4-inch-wide [320 mm]) body. The body is unbound, semi-hollow, with 2 o'clock angled sound hole (although re-issues lack a sound hole due to the Lennon connection).",
+      "It was designed by Roger Rossmeisl, a guitar craftsman from a family of German instrument makers. Production models were 20 3⁄4 inches (530 mm) short scale, dot fretboard inlays, and a small (12 3⁄4-inch-wide [320 mm]) body. The body is unbound, semi-hollow, with 2 o'clock angled sound hole (although re-issues lack a sound hole due to the Lennon connection).",
   },
   {
     name: "American Standard Telecaster",
