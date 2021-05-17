@@ -7,16 +7,18 @@ import Rating from "./Rating";
 const Product = ({ guitar }) => {
   return (
     <Card className="my-3 p-3 rounded">
-      <Link
-        to={{
-          pathname: `/product/${guitar._id}`,
-          state: {
-            data: guitar,
-          },
-        }}
-      >
-        <Card.Img variant="top" src={guitar.image} />
-      </Link>
+      <div>
+        <Link
+          to={{
+            pathname: `/product/${guitar._id}`,
+            state: {
+              data: guitar,
+            },
+          }}
+        >
+          <Card.Img variant="top" src={guitar.image} />
+        </Link>
+      </div>
 
       <Card.Body>
         <Link
@@ -27,7 +29,7 @@ const Product = ({ guitar }) => {
             },
           }}
         >
-          <Card.Title as="div">
+          <Card.Title as="div" style={{ height: "2.625rem" }}>
             <strong>{guitar.name}</strong>
           </Card.Title>
         </Link>
@@ -39,7 +41,8 @@ const Product = ({ guitar }) => {
         </Card.Text>
 
         <Card.Text as="h3" className="rating">
-          <span style={{ fontSize: "50%" }}>Price:</span>&#8377;{guitar.price}
+          <span style={{ fontSize: "50%" }}>Price:</span>
+          {guitar.price}
         </Card.Text>
       </Card.Body>
     </Card>
