@@ -4,15 +4,19 @@ import {
   getOrderById,
   getUserOrders,
   updateOrderToPaid,
+  getOrders,
 } from "../controllers/orderController.js";
-import { authMiddleware } from "../middleware/authMiddleware.js";
+import { authMiddleware, adminAuth } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 // @desc     Fetch all products
 // @route    GET /api/products
 // @access   Public
-router.route("/").post(authMiddleware, createOrder);
+router
+  .route("/")
+  .post(authMiddleware, createOrder)
+  .get(authMiddleware, adminAuth, getOrders);
 router.route("/myorders").get(authMiddleware, getUserOrders);
 router.route("/:id").get(authMiddleware, getOrderById);
 router.route("/:id/pay").put(authMiddleware, updateOrderToPaid);

@@ -11,6 +11,7 @@ import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import razorpayRoutes from "./routes/razorpayRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
@@ -33,11 +34,15 @@ app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/razorpay", razorpayRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.get("/hendrixmartLogo", (req, res) => {
   const __dirname = dirname(fileURLToPath(import.meta.url));
   res.sendFile(path.join(__dirname, "images/hendrixmart.png"));
 });
+
+const root = path.resolve();
+app.use("/uploads", express.static(path.join(root, "/uploads")));
 
 app.use(notFound);
 

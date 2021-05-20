@@ -29,6 +29,19 @@ const Header = ({ history }) => {
                 <i className="fa fa-cart-plus pr-1" aria-hidden="true"></i>Cart
               </Nav.Link>
             </LinkContainer>
+            {userInfo && userInfo.isAdmin && (
+              <NavDropdown className="navlink" title="Admin" id="adminmenu">
+                <LinkContainer to="/admin/userlist">
+                  <NavDropdown.Item>Users</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/productlist">
+                  <NavDropdown.Item>Products</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/orderlist">
+                  <NavDropdown.Item>Orders</NavDropdown.Item>
+                </LinkContainer>
+              </NavDropdown>
+            )}
             {userInfo ? (
               <NavDropdown
                 className="navlink"
@@ -49,19 +62,6 @@ const Header = ({ history }) => {
                   Sign In
                 </Nav.Link>
               </LinkContainer>
-            )}
-            {userInfo && userInfo.isAdmin && (
-              <NavDropdown className="navlink" title="Admin" id="adminmenu">
-                <LinkContainer to="/admin/userlist">
-                  <NavDropdown.Item>Users</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/admin/productlist">
-                  <NavDropdown.Item>Products</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/admin/orderlist">
-                  <NavDropdown.Item>Orders</NavDropdown.Item>
-                </LinkContainer>
-              </NavDropdown>
             )}
           </Nav>
         </Container>
