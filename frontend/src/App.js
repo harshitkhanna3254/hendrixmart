@@ -28,6 +28,7 @@ function App() {
           <Row>
             <Col>
               <Route path="/" component={HomeScreen} exact />
+              <Route path="/search/:keyword" component={HomeScreen} />
               <Route path="/signin" component={LoginScreen} />
               <Route path="/product/:id" component={ProductScreen} />
               <Route path="/cart/:id?" component={CartScreen} />
