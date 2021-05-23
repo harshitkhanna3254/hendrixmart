@@ -5,18 +5,18 @@ import {
   deleteProductById,
   createProduct,
   updateProduct,
+  createReview,
 } from "../controllers/productController.js";
 import { adminAuth, authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// @desc     Fetch all products
-// @route    GET /api/products
-// @access   Public
 router
   .route("/")
   .get(getProducts)
   .post(authMiddleware, adminAuth, createProduct);
+
+router.route("/:id/reviews").post(authMiddleware, createReview);
 
 router
   .route("/:id")

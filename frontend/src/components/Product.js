@@ -36,7 +36,11 @@ const Product = ({ guitar }) => {
 
         <Card.Text as="div">
           <div className="my-3">
-            <Rating rating={guitar.rating} numReviews={guitar.numReviews} />
+            <Rating
+              rating={guitar.rating}
+              numReviews={guitar.numReviews}
+              showNumReviews={true}
+            />
           </div>
         </Card.Text>
 

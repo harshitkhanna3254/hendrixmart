@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Rating = ({ rating, numReviews }) => {
+const Rating = ({ rating, numReviews, showNumReviews }) => {
   return (
     <div className="rating">
       {[1, 2, 3, 4, 5].map((index) => (
@@ -24,7 +24,8 @@ const Rating = ({ rating, numReviews }) => {
           ></i>
         </span>
       ))}
-      <span className="px-1">{numReviews} Reviews</span>
+
+      {showNumReviews && <span className="px-1">{numReviews} Reviews</span>}
     </div>
   );
 };

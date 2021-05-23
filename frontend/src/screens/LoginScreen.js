@@ -37,7 +37,7 @@ const LoginScreen = ({ location, history }) => {
       <h1>Sign In</h1>
       {error && (
         <Message variant="danger" header>
-          {error}{" "}
+          {error}
         </Message>
       )}
       {loading && <Loader size="small" />}

@@ -56,7 +56,7 @@ const Header = ({ history }) => {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <LinkContainer to="signin">
+              <LinkContainer to="/signin">
                 <Nav.Link className="navlink">
                   <i className="fa fa-user pr-1" aria-hidden="true"></i>
                   Sign In

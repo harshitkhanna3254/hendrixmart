@@ -13,12 +13,19 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
-import { getOrderDetails, payOrder } from "../actions/orderActions";
-import { ORDER_PAY_RESET } from "../constants/orderConstants";
+import {
+  deliverOrder,
+  getOrderDetails,
+  payOrder,
+} from "../actions/orderActions";
+import {
+  ORDER_PAY_RESET,
+  ORDER_DELIVER_RESET,
+} from "../constants/orderConstants";
 
 const RAZORPAY_SCRIPT = "https://checkout.razorpay.com/v1/checkout.js";
 
-const OrderScreen = ({ match }) => {
+const OrderScreen = ({ history, match }) => {
   const dispatch = useDispatch();
   const orderId = match.params.id;
 
@@ -33,8 +40,14 @@ const OrderScreen = ({ match }) => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, error, loading } = orderDetails;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const orderPay = useSelector((state) => state.orderPay);
   const { success: successPay, loading: loadingPay } = orderPay;
+
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { success: successDeliver, loading: loadingDeliver } = orderDeliver;
 
   const razorpayOrderHandler = async (e) => {
     const orderDetails = {
@@ -89,7 +102,15 @@ const OrderScreen = ({ match }) => {
     dispatch(payOrder(orderId, paymentResult));
   };
 
+  const deliverHandler = (e) => {
+    dispatch(deliverOrder(orderId));
+  };
+
   useEffect(() => {
+    if (!userInfo) {
+      return history.push(`/signin`);
+    }
+
     const loadRazorpayScript = async () => {
       const script = document.createElement("script");
       script.type = "text/javascript";
@@ -104,8 +125,15 @@ const OrderScreen = ({ match }) => {
       document.body.appendChild(script);
     };
 
-    if (!order || successPay || order._id !== orderId) {
+    if (order) {
+      if (userInfo._id !== order.user._id && !userInfo.isAdmin) {
+        return history.push(`/signin`);
+      }
+    }
+
+    if (!order || successPay || order._id !== orderId || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
       if (!window.Razorpay) {
@@ -114,7 +142,7 @@ const OrderScreen = ({ match }) => {
         setSdkReady(true);
       }
     }
-  }, [dispatch, order, orderId, successPay]);
+  }, [dispatch, order, orderId, successPay, successDeliver, history, userInfo]);
 
   return (
     <>
@@ -150,7 +178,8 @@ const OrderScreen = ({ match }) => {
                   </p>
                   {order.isDelivered ? (
                     <Message variant="success">
-                      Delivered on ${order.deliveredAt}
+                      Delivered on{" "}
+                      {new Date(order.deliveredAt).toLocaleString()}
                     </Message>
                   ) : (
                     <Message variant="danger">Not Delivered</Message>
@@ -263,12 +292,31 @@ const OrderScreen = ({ match }) => {
                       {!sdkReady ? (
                         <Loader size="small" />
                       ) : (
-                        <Button onClick={razorpayOrderHandler}>
+                        <Button
+                          type="button"
+                          className="btn btn-block"
+                          onClick={razorpayOrderHandler}
+                        >
                           Payment Button
                         </Button>
                       )}
                     </ListGroup.Item>
                   )}
+                  {loadingDeliver && <Loader size="small" />}
+                  {userInfo &&
+                    userInfo.isAdmin &&
+                    order.isPaid &&
+                    !order.isDelivered && (
+                      <ListGroup.Item>
+                        <Button
+                          type="button"
+                          className="btn btn-block"
+                          onClick={deliverHandler}
+                        >
+                          Mark as Delivered
+                        </Button>
+                      </ListGroup.Item>
+                    )}
                 </ListGroup>
               </Card>
             </Col>
