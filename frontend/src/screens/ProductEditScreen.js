@@ -118,7 +118,10 @@ const ProductEditScreen = ({ history, match }) => {
             </Form.Group>
 
             <Form.Group controlId="price">
-              <Form.Label>Price</Form.Label>
+              <Form.Label>
+                Price (Please add only in this format :: 1,00,000 or 50,000 or
+                250)
+              </Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter Price"
@@ -128,7 +131,10 @@ const ProductEditScreen = ({ history, match }) => {
             </Form.Group>
 
             <Form.Group controlId="image">
-              <Form.Label>Image</Form.Label>
+              <Form.Label>
+                Image (Please only upload images of size 640x510 for a better
+                view)
+              </Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter Image url"
