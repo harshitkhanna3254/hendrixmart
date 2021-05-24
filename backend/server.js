@@ -26,10 +26,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/root", (req, res, next) => {
-  res.send("Root");
-});
-
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
@@ -43,6 +39,14 @@ app.get("/hendrixmartLogo", (req, res) => {
 
 const root = path.resolve();
 app.use("/uploads", express.static(path.join(root, "/uploads")));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(root, "/frontend/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(root, "frontend", "build", "index.html"));
+  });
+}
 
 app.use(notFound);
 
