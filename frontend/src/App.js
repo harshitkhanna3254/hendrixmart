@@ -36,7 +36,6 @@ function App() {
                 component={HomeScreen}
                 exact
               />
-
               <Route path="/signin" component={LoginScreen} />
               <Route path="/product/:id" component={ProductScreen} />
               <Route path="/cart/:id?" component={CartScreen} />
@@ -58,9 +57,7 @@ function App() {
                 component={ProductListScreen}
                 exact
               />
-
               <Route path="/admin/orderlist" component={OrderListScreen} />
-
               <Route
                 path="/admin/product/:id/edit"
                 component={ProductEditScreen}
