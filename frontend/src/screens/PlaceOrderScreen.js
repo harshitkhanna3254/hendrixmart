@@ -57,16 +57,22 @@ const PlaceOrder = ({ history }) => {
   };
 
   useEffect(() => {
+    console.log("EseEffect of Place Order Screen");
+
     if (!userInfo) {
+      console.log("Userinfo not found. not logged in");
       history.push(`/signin`);
     }
 
+    console.log("User is logged in. Checking the value of Order success");
+
     if (success) {
+      console.log("Order Success is true");
       history.push(`/order/${order._id}`);
       dispatch({ type: ORDER_CREATE_RESET });
     }
     // eslint-disable-next-line
-  }, [history, success]);
+  }, [history, success, userInfo, order]);
 
   return (
     <>
