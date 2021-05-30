@@ -46,7 +46,7 @@ const Product = ({ guitar }) => {
 
         <Card.Text as="h3" className="rating">
           <span style={{ fontSize: "50%" }}>Price:</span>
-          {guitar.price}
+          &#8377;{guitar.price}
         </Card.Text>
       </Card.Body>
     </Card>
