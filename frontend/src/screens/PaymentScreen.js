@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button, Col } from "react-bootstrap";
+import { Button, Col, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import FormContainer from "../components/FormContainer";
-import CheckoutSteps from "../components/CheckoutSteps";
 import { savePaymentMethod } from "../actions/cartActions";
+import CheckoutSteps from "../components/CheckoutSteps";
+import FormContainer from "../components/FormContainer";
 
 const PaymentScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const PaymentScreen = ({ history }) => {
 
   if (!shippingAddress) history.push("/shipping");
 
-  const [paymentMethod, setPaymentMethod] = useState("PayPal");
+  const [paymentMethod, setPaymentMethod] = useState("Razorpay");
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -40,10 +40,10 @@ const PaymentScreen = ({ history }) => {
           <Col>
             <Form.Check
               type="radio"
-              label="PayPal or Credit Card"
-              id="PayPal"
+              label="Razorpay (Debit, Credit, UPI)"
+              id="Razorpay"
               name="paymentMethod"
-              value="PayPal"
+              value="Razorpay"
               checked
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Form, Row, Col, Table } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { myOrdersList } from "../actions/orderActions";
+import { getUserDetails, updateUserProfile } from "../actions/userActions";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 const ProfileScreen = ({ history, location }) => {
   const [name, setName] = useState("");
@@ -127,8 +127,8 @@ const ProfileScreen = ({ history, location }) => {
         ) : myOrdersError ? (
           <Message variant="warning">{myOrdersError}</Message>
         ) : (
-          <Table responsive hover striped bordered size="sm" variant="dark">
-            <thead className="text-center">
+          <Table responsive hover striped bordered size="sm" variant="light">
+            <thead className="text-center thead-dark">
               <tr>
                 <th>ID</th>
                 <th>DATE (y-m-d)</th>
@@ -143,7 +143,7 @@ const ProfileScreen = ({ history, location }) => {
                 <tr key={order._id}>
                   <td>{order._id}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>{order.totalPrice}</td>
+                  <td>&#8377; {order.totalPrice.toLocaleString("hi-IN")}</td>
                   <td>
                     {order.isPaid ? (
                       order.paidAt.substring(0, 10)

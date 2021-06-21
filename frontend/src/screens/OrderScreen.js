@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
-  Row,
+  Button,
+  Card,
   Col,
+  Image,
   ListGroup,
   ListGroupItem,
-  Image,
-  Card,
-  Button,
+  Row,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
 import {
   deliverOrder,
   getOrderDetails,
   payOrder,
 } from "../actions/orderActions";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 import {
-  ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
 } from "../constants/orderConstants";
 
 const RAZORPAY_SCRIPT = "https://checkout.razorpay.com/v1/checkout.js";
@@ -37,11 +37,11 @@ const OrderScreen = ({ history, match }) => {
   const [paymentSuccess, setPaymentSuccess] = useState(true);
   const [paymentMessage, setPaymentMessage] = useState("");
 
-  const orderDetails = useSelector((state) => state.orderDetails);
-  const { order, error, loading } = orderDetails;
-
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const orderDetails = useSelector((state) => state.orderDetails);
+  const { order, error, loading } = orderDetails;
 
   const orderPay = useSelector((state) => state.orderPay);
   const { success: successPay, loading: loadingPay } = orderPay;
@@ -125,11 +125,12 @@ const OrderScreen = ({ history, match }) => {
       document.body.appendChild(script);
     };
 
-    if (order) {
-      if (userInfo._id !== order.user._id && !userInfo.isAdmin) {
-        return history.push(`/signin`);
-      }
-    }
+    // if (order) {
+    //   if (userInfo._id !== order.user._id && !userInfo.isAdmin) {
+    //     console.log("Reached here..... sad");
+    //     return history.push(`/signin`);
+    //   }
+    // }
 
     if (!order || successPay || order._id !== orderId || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
