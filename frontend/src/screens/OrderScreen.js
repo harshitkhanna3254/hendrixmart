@@ -320,6 +320,31 @@ const OrderScreen = ({ history, match }) => {
                     )}
                 </ListGroup>
               </Card>
+
+              <Card className="mt-4">
+                <ListGroup>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Dummy Card</Col>
+                      <Col>4111 1111 1111 1111</Col>
+                    </Row>
+                  </ListGroup.Item>
+
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Dummy CVV</Col>
+                      <Col>Random 3 digit number</Col>
+                    </Row>
+                  </ListGroup.Item>
+
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Dummy Exp Date</Col>
+                      <Col>Any future date</Col>
+                    </Row>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
             </Col>
           </Row>
         </>
